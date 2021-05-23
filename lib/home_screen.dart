@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/data/response_restaurant.dart';
+import 'package:lezato/detail_screen.dart';
 
 import 'data/api.dart';
 
@@ -22,7 +23,14 @@ class HomeScreen extends StatelessWidget {
               return ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
                   Restaurant restaurant = restaurants[index];
-                  return card(context, restaurant);
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return DetailScreen(restaurant: restaurant);
+                      }));
+                    },
+                    child: card(context, restaurant),
+                  );
                 },
                 itemCount: snapshot.data.restaurants.length,
               );
@@ -42,7 +50,7 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         children: [
           Stack(children: [
-            CachedNetworkImage(imageUrl: restaurant.pictureId),
+            Hero(tag: restaurant.id, child: CachedNetworkImage(imageUrl: restaurant.pictureId)),
             Positioned(
                 bottom: 10,
                 right: 10,
@@ -67,7 +75,16 @@ class HomeScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline6,
                       overflow: TextOverflow.fade,
                     ),
-                    Text(restaurant.city),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          size: 16,
+                          color: Colors.grey,
+                        ),
+                        Text(restaurant.city),
+                      ],
+                    ),
                   ],
                 ),
               ),
