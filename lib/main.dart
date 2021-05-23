@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lezato/home_screen.dart';
+import 'package:lezato/data/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: HomeScreen(),
+      home: SplashScreen(),
     );
   }
 }
