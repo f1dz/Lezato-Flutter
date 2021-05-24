@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lezato/data/splash_screen.dart';
+import 'package:lezato/splash_screen.dart';
 
 void main() {
   runApp(MyApp());

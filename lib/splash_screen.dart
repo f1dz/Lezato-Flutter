@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   openHome() {
-    Future.delayed(Duration(seconds: 2)).then((value) {
+    Future.delayed(Duration(seconds: 3)).then((value) {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
         return HomeScreen();
       }));

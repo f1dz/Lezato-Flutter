@@ -29,13 +29,17 @@ class HomeScreen extends StatelessWidget {
                         return DetailScreen(restaurant: restaurant);
                       }));
                     },
-                    child: card(context, restaurant),
+                    child: item(context, restaurant),
                   );
                 },
                 itemCount: snapshot.data.restaurants.length,
               );
             } else {
-              return Container();
+              return Container(
+                child: Center(
+                  child: Text('No data to displayed'),
+                ),
+              );
             }
           },
         ),
@@ -43,7 +47,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  card(BuildContext context, Restaurant restaurant) {
+  item(BuildContext context, Restaurant restaurant) {
     return Card(
       margin: EdgeInsets.all(8),
       clipBehavior: Clip.antiAlias,
