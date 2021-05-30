@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lezato/data/model/response/response_restaurant.dart';
+import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/detail_screen.dart';
-
-import 'data/api/api_service.dart';
+import 'package:lezato/provider/app_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -15,33 +15,39 @@ class HomeScreen extends StatelessWidget {
         title: Center(child: Text('Lezato')),
       ),
       body: Center(
-        child: FutureBuilder<ResponseRestaurant>(
-          future: ApiService.getList(),
-          builder: (context, snapshot) {
-            if (snapshot.data != null) {
-              List<Restaurant> restaurants = snapshot.data.restaurants;
-              return ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  Restaurant restaurant = restaurants[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return DetailScreen(restaurant: restaurant);
-                      }));
-                    },
-                    child: item(context, restaurant),
-                  );
-                },
-                itemCount: snapshot.data.restaurants.length,
-              );
-            } else {
-              return Container(
-                child: Center(
+        child: ChangeNotifierProvider(
+          create: (_) => AppProvider(apiService: ApiService()),
+          child: Consumer<AppProvider>(
+            builder: (context, state, _) {
+              if (state.state == ResultState.Loading) {
+                return Center(child: CircularProgressIndicator());
+              } else if (state.state == ResultState.HasData) {
+                List<Restaurant> restaurants = state.result.restaurants;
+                return ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    Restaurant restaurant = restaurants[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return DetailScreen(restaurant: restaurant);
+                        }));
+                      },
+                      child: item(context, restaurant),
+                    );
+                  },
+                  itemCount: restaurants.length,
+                );
+              } else if (state.state == ResultState.NoData) {
+                return Center(child: Text(state.message));
+              } else if (state.state == ResultState.Error) {
+                return Center(child: Text(state.message));
+              } else {
+                return Center(
                   child: Text('No data to displayed'),
-                ),
-              );
-            }
-          },
+                );
+              }
+            },
+          ),
         ),
       ),
     );
