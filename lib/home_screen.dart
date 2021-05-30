@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lezato/data/model/response/response_restaurant.dart';
 import 'package:lezato/data/model/restaurant.dart';
-import 'package:lezato/data/response_restaurant.dart';
 import 'package:lezato/detail_screen.dart';
 
-import 'data/api.dart';
+import 'data/api/api_service.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: FutureBuilder<ResponseRestaurant>(
-          future: Api.getData(),
+          future: ApiService.getList(),
           builder: (context, snapshot) {
             if (snapshot.data != null) {
               List<Restaurant> restaurants = snapshot.data.restaurants;

@@ -15,20 +15,6 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderStateMixin {
-  TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,7 +87,7 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
               style: Theme.of(context).textTheme.headline6,
             )),
           ),
-          menuList(widget.restaurant.menus.foods),
+          // menuList(widget.restaurant.menus.foods),
           SliverPadding(
             padding: EdgeInsets.all(4),
             sliver: SliverToBoxAdapter(
@@ -110,7 +96,7 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
               style: Theme.of(context).textTheme.headline6,
             )),
           ),
-          menuList(widget.restaurant.menus.drinks),
+          // menuList(widget.restaurant.menus.drinks),
         ],
       ),
     );

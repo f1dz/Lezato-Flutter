@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+
 class Food {
   Food({
-    this.name,
+    @required this.name,
   });
 
   String name;

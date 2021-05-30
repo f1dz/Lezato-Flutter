@@ -1,10 +1,12 @@
+import 'package:flutter/material.dart';
+
 import 'drink.dart';
 import 'food.dart';
 
 class Menu {
   Menu({
-    this.foods,
-    this.drinks,
+    @required this.foods,
+    @required this.drinks,
   });
 
   List<Food> foods;
