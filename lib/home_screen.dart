@@ -16,7 +16,11 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: ChangeNotifierProvider(
-          create: (_) => AppProvider(apiService: ApiService()),
+          create: (_) {
+            var provider = AppProvider(apiService: ApiService());
+            provider.getRestaurants();
+            return provider;
+          },
           child: Consumer<AppProvider>(
             builder: (context, state, _) {
               if (state.state == ResultState.Loading) {

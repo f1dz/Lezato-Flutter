@@ -24,7 +24,7 @@ class Restaurant {
   String city;
   double rating;
   List<Categories> categories;
-  List<Menu> menus;
+  Menu menus;
   List<Review> customerReviews;
 
   factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(
@@ -37,7 +37,7 @@ class Restaurant {
       categories: json["categories"] == null
           ? null
           : List<Categories>.from(json['categories'].map((x) => Categories.fromJson(x))),
-      menus: json["menus"] == null ? null : List<Menu>.from(json["menu"].map((x) => Menu.fromJson(x))),
+      menus: json["menus"] == null ? null : Menu.fromJson(json["menus"]),
       customerReviews: json["customerReviews"] == null
           ? null
           : List<Review>.from(json["customerReviews"].map((x) => Review.fromJson(x))));
