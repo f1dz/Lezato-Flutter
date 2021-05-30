@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
       padding: const EdgeInsets.all(0.0),
       width: 300,
       height: 300,
-      child: Lottie.network('https://assets1.lottiefiles.com/private_files/lf30_fqBsFC.json'),
+      child: Lottie.asset("assets/json/resto.json"),
     )))));
   }
 

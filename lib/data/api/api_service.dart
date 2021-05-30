@@ -8,12 +8,15 @@ import '../utils/config.dart';
 
 class ApiService {
   Future<ResponseRestaurant> getList() async {
-    final response = await http.get(Uri.parse(Config.BASE_URL + 'list'));
-    print(Config.BASE_URL + 'list');
-    if (response.statusCode == 200) {
-      return ResponseRestaurant.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to get restaurants');
+    try {
+      final response = await http.get(Uri.parse(Config.BASE_URL + 'list'));
+      if (response.statusCode == 200) {
+        return ResponseRestaurant.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Failed to get restaurants');
+      }
+    } catch (e) {
+      throw Exception(e.message);
     }
   }
 
