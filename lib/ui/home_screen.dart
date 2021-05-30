@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/restaurant.dart';
-import 'package:lezato/detail_screen.dart';
 import 'package:lezato/provider/app_provider.dart';
+import 'package:lezato/ui/detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,11 +16,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: ChangeNotifierProvider(
-          create: (_) {
-            var provider = AppProvider(apiService: ApiService());
-            provider.getRestaurants();
-            return provider;
-          },
+          create: (_) => AppProvider(apiService: ApiService()).getRestaurants(),
           child: Consumer<AppProvider>(
             builder: (context, state, _) {
               if (state.state == ResultState.Loading) {

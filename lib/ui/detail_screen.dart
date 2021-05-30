@@ -7,7 +7,7 @@ import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'data/model/food.dart';
+import '../data/model/food.dart';
 
 class DetailScreen extends StatefulWidget {
   final Restaurant restaurant;
@@ -21,11 +21,7 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) {
-        var provider = AppProvider(apiService: ApiService());
-        provider.getRestaurant(widget.restaurant.id);
-        return provider;
-      },
+      create: (_) => AppProvider(apiService: ApiService()).getRestaurant(widget.restaurant.id),
       child: Consumer<AppProvider>(
         builder: (context, state, _) {
           if (state.state == ResultState.Loading) {

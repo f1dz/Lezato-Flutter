@@ -20,12 +20,14 @@ class AppProvider extends ChangeNotifier {
   ResultState get state => _state;
   String get message => _message;
 
-  void getRestaurants() {
+  AppProvider getRestaurants() {
     _fetchRestaurants();
+    return this;
   }
 
-  void getRestaurant(String id) {
+  AppProvider getRestaurant(String id) {
     _fetchRestaurant(id);
+    return this;
   }
 
   Future<dynamic> _fetchRestaurants() async {
