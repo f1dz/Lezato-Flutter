@@ -7,37 +7,33 @@ import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
 import 'package:lezato/ui/detail_screen.dart';
+import 'package:lezato/widget/custom_sliver_appbar.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   title: Center(child: Text('')),
-        // ),
-        body: CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          title: Center(
-            child: Text(
-              'Lezato',
-              style: TextStyle(color: Colors.red),
+        body: ChangeNotifierProvider(
+      create: (_) => AppProvider(apiService: ApiService()).getRestaurants(),
+      child: CustomScrollView(
+        slivers: [
+          Consumer<AppProvider>(
+            builder: (context, provider, _) {
+              return SliverPersistentHeader(
+                delegate: CustomSliverAppBar(expandedHeight: 250, provider: provider),
+              );
+            },
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 30,
             ),
           ),
-          floating: true,
-          expandedHeight: 200,
-          flexibleSpace: Image.asset(
-            'assets/images/restaurant_small.jpeg',
-            fit: BoxFit.cover,
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => AppProvider(apiService: ApiService()).getRestaurants(),
-          child: Consumer<AppProvider>(
+          Consumer<AppProvider>(
             builder: (context, state, _) {
               if (state.state == ResultState.Loading) {
-                return SliverToBoxAdapter(
+                return SliverFillRemaining(
                   child: Center(child: CircularProgressIndicator()),
                 );
               } else if (state.state == ResultState.HasData) {
@@ -50,9 +46,9 @@ class HomeScreen extends StatelessWidget {
                 );
               }
             },
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     ));
   }
 

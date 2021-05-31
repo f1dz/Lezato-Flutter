@@ -20,6 +20,19 @@ class ApiService {
     }
   }
 
+  Future<ResponseRestaurant> search({String query = ""}) async {
+    try {
+      final response = await http.get(Uri.parse(Config.BASE_URL + 'search?q=' + query));
+      if (response.statusCode == 200) {
+        return ResponseRestaurant.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Failed to get restaurants');
+      }
+    } catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
   Future<ResponseRestaurantDetail> getDetail(String id) async {
     final response = await http.get(Uri.parse(Config.BASE_URL + 'detail/$id'));
     if (response.statusCode == 200) {

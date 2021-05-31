@@ -14,6 +14,7 @@ class AppProvider extends ChangeNotifier {
   ResponseRestaurantDetail _responseRestaurantDetail;
   ResultState _state;
   String _message;
+  String _query = "";
 
   ResponseRestaurant get result => _responseRestaurant;
   ResponseRestaurantDetail get restaurant => _responseRestaurantDetail;
@@ -34,7 +35,7 @@ class AppProvider extends ChangeNotifier {
     try {
       _state = ResultState.Loading;
       notifyListeners();
-      final response = await apiService.getList();
+      final response = await apiService.search(query: _query);
       if (response.restaurants.isEmpty) {
         _state = ResultState.NoData;
         notifyListeners();
@@ -70,5 +71,10 @@ class AppProvider extends ChangeNotifier {
       notifyListeners();
       return _message = 'Error --> $e';
     }
+  }
+
+  void onSearch(String query) {
+    _query = query;
+    _fetchRestaurants();
   }
 }
