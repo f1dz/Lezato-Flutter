@@ -8,6 +8,7 @@ import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
 import 'package:lezato/ui/detail_screen.dart';
 import 'package:lezato/widget/custom_sliver_appbar.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -48,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                 );
               } else {
                 return SliverFillRemaining(
-                  child: Center(child: Text('No data found')),
+                  child: Center(child: Lottie.asset('assets/json/search_empty.json')),
                 );
               }
             },
