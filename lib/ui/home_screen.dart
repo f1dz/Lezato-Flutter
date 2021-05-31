@@ -81,6 +81,10 @@ class HomeScreen extends StatelessWidget {
                         width: 150,
                         height: 140,
                         fit: BoxFit.cover,
+                        progressIndicatorBuilder: (context, data, _) => Center(
+                          child: CircularProgressIndicator(),
+                          widthFactor: 0.3,
+                        ),
                       ),
                     )),
                 Flexible(
