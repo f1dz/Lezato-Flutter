@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
@@ -11,95 +13,119 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text('Lezato')),
-      ),
-      body: Center(
-        child: ChangeNotifierProvider(
+        // appBar: AppBar(
+        //   title: Center(child: Text('')),
+        // ),
+        body: CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          title: Center(
+            child: Text(
+              'Lezato',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+          floating: true,
+          expandedHeight: 200,
+          flexibleSpace: Image.asset(
+            'assets/images/restaurant_small.jpeg',
+            fit: BoxFit.cover,
+          ),
+        ),
+        ChangeNotifierProvider(
           create: (_) => AppProvider(apiService: ApiService()).getRestaurants(),
           child: Consumer<AppProvider>(
             builder: (context, state, _) {
               if (state.state == ResultState.Loading) {
-                return Center(child: CircularProgressIndicator());
-              } else if (state.state == ResultState.HasData) {
-                List<Restaurant> restaurants = state.result.restaurants;
-                return ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    Restaurant restaurant = restaurants[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return DetailScreen(restaurant: restaurant);
-                        }));
-                      },
-                      child: item(context, restaurant),
-                    );
-                  },
-                  itemCount: restaurants.length,
+                return SliverToBoxAdapter(
+                  child: Center(child: CircularProgressIndicator()),
                 );
-              } else if (state.state == ResultState.NoData) {
-                return Center(child: Text(state.message));
-              } else if (state.state == ResultState.Error) {
-                return Center(child: Text(state.message));
+              } else if (state.state == ResultState.HasData) {
+                return SliverList(
+                    delegate: SliverChildListDelegate(
+                        state.result.restaurants.map((restaurant) => item(context, restaurant)).toList()));
               } else {
-                return Center(
-                  child: Text('No data to displayed'),
+                return SliverToBoxAdapter(
+                  child: Text('No data found'),
                 );
               }
             },
           ),
-        ),
-      ),
-    );
+        )
+      ],
+    ));
   }
 
-  item(BuildContext context, Restaurant restaurant) {
-    return Card(
-      margin: EdgeInsets.all(8),
-      clipBehavior: Clip.antiAlias,
+  Widget item(BuildContext context, Restaurant restaurant) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return DetailScreen(restaurant: restaurant);
+        }));
+      },
       child: Column(
         children: [
-          Stack(children: [
-            Hero(tag: restaurant.id, child: CachedNetworkImage(imageUrl: restaurant.pictureId)),
-            Positioned(
-                bottom: 10,
-                right: 10,
-                child: Container(
-                    padding: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(color: Colors.orange, borderRadius: BorderRadius.circular(6)),
-                    child: Text(
-                      restaurant.rating.toString(),
-                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-                    )))
-          ]),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      restaurant.name,
-                      style: Theme.of(context).textTheme.headline6,
-                      overflow: TextOverflow.fade,
-                    ),
-                    Row(
+          Container(
+            margin: EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Hero(
+                    tag: restaurant.id,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CachedNetworkImage(
+                        imageUrl: restaurant.pictureId,
+                        width: 150,
+                        height: 140,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.location_on,
-                          size: 16,
-                          color: Colors.grey,
+                        Text(
+                          restaurant.name,
+                          style: Theme.of(context).textTheme.headline6,
+                          overflow: TextOverflow.visible,
                         ),
-                        Text(restaurant.city),
+                        Text(
+                          restaurant.description,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                        RatingBarIndicator(
+                            rating: restaurant.rating,
+                            itemSize: 24,
+                            itemBuilder: (context, index) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                )),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              size: 16,
+                              color: Colors.grey,
+                            ),
+                            Text(restaurant.city),
+                          ],
+                        ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
+          Divider(
+            color: Colors.black26,
+            height: 1,
+            indent: 16,
+            endIndent: 16,
+          )
         ],
       ),
     );
