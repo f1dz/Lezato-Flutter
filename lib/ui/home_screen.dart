@@ -40,9 +40,15 @@ class HomeScreen extends StatelessWidget {
                 return SliverList(
                     delegate: SliverChildListDelegate(
                         state.result.restaurants.map((restaurant) => item(context, restaurant)).toList()));
+              } else if (state.state == ResultState.Error) {
+                return SliverFillRemaining(
+                  child: Center(
+                    child: Text(state.message),
+                  ),
+                );
               } else {
-                return SliverToBoxAdapter(
-                  child: Text('No data found'),
+                return SliverFillRemaining(
+                  child: Center(child: Text('No data found')),
                 );
               }
             },
