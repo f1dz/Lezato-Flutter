@@ -88,7 +88,7 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
               background: Hero(
                 tag: restaurant.id,
                 child: CachedNetworkImage(
-                  imageUrl: restaurant.pictureId,
+                  imageUrl: restaurant.getMediumPicture(),
                   fit: BoxFit.cover,
                 ),
               ),

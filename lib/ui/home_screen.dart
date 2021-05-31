@@ -74,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: CachedNetworkImage(
-                        imageUrl: restaurant.pictureId,
+                        imageUrl: restaurant.getSmallPicture(),
                         width: 150,
                         height: 140,
                         fit: BoxFit.cover,

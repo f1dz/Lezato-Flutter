@@ -31,7 +31,7 @@ class Restaurant {
       id: json["id"],
       name: json["name"],
       description: json["description"],
-      pictureId: Config.IMG_SMALL_URL + json["pictureId"],
+      pictureId: json["pictureId"],
       city: json["city"],
       rating: json["rating"].toDouble(),
       categories: json["categories"] == null
@@ -41,4 +41,10 @@ class Restaurant {
       customerReviews: json["customerReviews"] == null
           ? null
           : List<Review>.from(json["customerReviews"].map((x) => Review.fromJson(x))));
+
+  String getSmallPicture() => Config.IMG_SMALL_URL + this.pictureId;
+
+  String getMediumPicture() => Config.IMG_MEDIUM_URL + this.pictureId;
+
+  String getLargePicture() => Config.IMG_LARGE_URL + this.pictureId;
 }
