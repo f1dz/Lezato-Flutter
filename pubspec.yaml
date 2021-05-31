@@ -29,3 +29,8 @@ flutter:
   assets:
     - assets/json/
     - assets/images/
+
+  fonts:
+    - family: Pattaya
+      fonts:
+        - asset: fonts/Pattaya-Regular.ttf

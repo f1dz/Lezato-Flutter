@@ -24,8 +24,16 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: Container(
       padding: const EdgeInsets.all(0.0),
       width: 300,
-      height: 300,
-      child: Lottie.asset("assets/json/resto.json"),
+      height: 400,
+      child: Column(
+        children: [
+          Lottie.asset("assets/json/resto.json"),
+          Text(
+            'Lezato',
+            style: TextStyle(fontFamily: 'Pattaya', fontSize: 48, color: Colors.red),
+          )
+        ],
+      ),
     )))));
   }
 
