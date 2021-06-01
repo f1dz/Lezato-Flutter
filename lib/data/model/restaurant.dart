@@ -43,7 +43,9 @@ class Restaurant {
       menus: json["menus"] == null ? null : Menu.fromJson(json["menus"]),
       customerReviews: json["customerReviews"] == null
           ? null
-          : List<Review>.from(json["customerReviews"].map((x) => Review.fromJson(x))));
+          : List<Review>.from((json["customerReviews"] as List)
+              .map((x) => Review.fromJson(x))
+              .where((review) => review.review != null)));
 
   String getSmallPicture() => Config.IMG_SMALL_URL + this.pictureId;
 
