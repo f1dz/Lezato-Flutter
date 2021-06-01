@@ -28,6 +28,21 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
           ),
         ),
         Positioned(
+          top: 0,
+          child: SafeArea(
+              child: Row(
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.red,
+                ),
+                onPressed: () => Navigator.pop(context),
+              )
+            ],
+          )),
+        ),
+        Positioned(
           top: 150 - shrinkOffset,
           left: 8,
           right: 8,

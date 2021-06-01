@@ -43,7 +43,7 @@ class ReviewScreen extends StatelessWidget {
                     });
                 break;
               case ResultState.Error:
-                return Center(child: Text(provider.message));
+                return Center(child: Container(padding: EdgeInsets.all(16), child: Text(provider.message)));
                 break;
             }
             return Container();

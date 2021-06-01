@@ -23,22 +23,29 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => AppProvider(apiService: ApiService()).getRestaurant(widget.restaurant.id),
-      child: Consumer<AppProvider>(
-        builder: (context, state, _) {
-          if (state.state == ResultState.Loading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state.state == ResultState.HasData) {
-            return screen(state.restaurant.restaurant);
-          } else if (state.state == ResultState.NoData) {
-            return Center(child: Text(state.message));
-          } else if (state.state == ResultState.Error) {
-            return Center(child: Text(state.message));
-          } else {
-            return Center(
-              child: Text('No data to displayed'),
-            );
-          }
-        },
+      child: Scaffold(
+        body: Consumer<AppProvider>(
+          builder: (context, state, _) {
+            if (state.state == ResultState.Loading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state.state == ResultState.HasData) {
+              return screen(state.restaurant.restaurant);
+            } else if (state.state == ResultState.NoData) {
+              return Center(child: Text(state.message));
+            } else if (state.state == ResultState.Error) {
+              return Center(
+                child: Container(
+                  padding: EdgeInsets.all(16),
+                  child: Text(state.message),
+                ),
+              );
+            } else {
+              return Center(
+                child: Text('No data to displayed'),
+              );
+            }
+          },
+        ),
       ),
     );
   }
@@ -86,57 +93,55 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
   }
 
   screen(Restaurant restaurant) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverPersistentHeader(delegate: DetailSliverAppBar(expandedHeight: 250, restaurant: restaurant)),
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: 120,
-            ),
+    return CustomScrollView(
+      slivers: [
+        SliverPersistentHeader(delegate: DetailSliverAppBar(expandedHeight: 250, restaurant: restaurant)),
+        SliverToBoxAdapter(
+          child: SizedBox(
+            height: 120,
           ),
-          SliverPadding(
-            padding: EdgeInsets.all(4),
-            sliver: SliverToBoxAdapter(
-                child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.fastfood,
-                    color: Colors.orange,
-                  ),
+        ),
+        SliverPadding(
+          padding: EdgeInsets.all(4),
+          sliver: SliverToBoxAdapter(
+              child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.fastfood,
+                  color: Colors.orange,
                 ),
-                Text(
-                  'Foods',
-                  style: Theme.of(context).textTheme.headline6,
+              ),
+              Text(
+                'Foods',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ],
+          )),
+        ),
+        menuList(restaurant.menus.foods),
+        SliverPadding(
+          padding: EdgeInsets.all(4),
+          sliver: SliverToBoxAdapter(
+              child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.local_drink,
+                  color: Colors.orange,
                 ),
-              ],
-            )),
-          ),
-          menuList(restaurant.menus.foods),
-          SliverPadding(
-            padding: EdgeInsets.all(4),
-            sliver: SliverToBoxAdapter(
-                child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.local_drink,
-                    color: Colors.orange,
-                  ),
-                ),
-                Text(
-                  'Drinks',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ],
-            )),
-          ),
-          menuList(restaurant.menus.drinks),
-        ],
-      ),
+              ),
+              Text(
+                'Drinks',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ],
+          )),
+        ),
+        menuList(restaurant.menus.drinks),
+      ],
     );
   }
 }
