@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:lezato/data/model/categories.dart';
 import 'package:lezato/data/model/review.dart';
-import 'package:lezato/data/utils/config.dart';
+import 'package:lezato/utils/config.dart';
 
 import 'menu.dart';
 

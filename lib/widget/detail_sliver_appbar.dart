@@ -5,7 +5,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 /// [link] https://medium.com/flutter-community/flutter-increase-the-power-of-your-appbar-sliverappbar-c4f67c4e076f
 ///
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lezato/data/model/restaurant.dart';
 
 class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
@@ -56,21 +55,23 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
                                 ),
                               ],
                             ),
-                            RatingBarIndicator(
-                                rating: restaurant.rating,
-                                itemSize: 18,
-                                itemBuilder: (context, index) => Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                    )),
                             Row(
                               children: [
                                 Icon(
                                   Icons.location_on,
-                                  size: 16,
-                                  color: Colors.grey,
+                                  size: 18,
+                                  color: Colors.red,
                                 ),
                                 Text(restaurant.city, style: Theme.of(context).textTheme.bodyText1),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Icon(
+                                  Icons.star,
+                                  size: 18,
+                                  color: Colors.amber,
+                                ),
+                                Text("${restaurant.rating}")
                               ],
                             ),
                             Row(

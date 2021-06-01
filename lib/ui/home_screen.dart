@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
@@ -103,19 +102,22 @@ class HomeScreen extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                         ),
-                        RatingBarIndicator(
-                            rating: restaurant.rating,
-                            itemSize: 24,
-                            itemBuilder: (context, index) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                )),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.star,
+                              size: 20,
+                              color: Colors.amber,
+                            ),
+                            Text("${restaurant.rating}"),
+                          ],
+                        ),
                         Row(
                           children: [
                             Icon(
                               Icons.location_on,
-                              size: 16,
-                              color: Colors.grey,
+                              size: 20,
+                              color: Colors.red,
                             ),
                             Text(restaurant.city),
                           ],

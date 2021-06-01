@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/restaurant.dart';
-import 'package:lezato/data/utils/utils.dart';
 import 'package:lezato/provider/app_provider.dart';
+import 'package:lezato/utils/utils.dart';
 import 'package:lezato/widget/detail_sliver_appbar.dart';
 import 'package:provider/provider.dart';
 
@@ -68,7 +68,10 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(e.name),
+                  child: Text(
+                    Utils.camelCase(e.name),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 Text(
                   Utils.generatePrice(),
@@ -89,7 +92,7 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
           SliverPersistentHeader(delegate: DetailSliverAppBar(expandedHeight: 250, restaurant: restaurant)),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: 160,
+              height: 140,
             ),
           ),
           SliverPadding(

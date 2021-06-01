@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:lezato/data/model/response/response_restaurant.dart';
 import 'package:lezato/data/model/response/response_restaurant_detail.dart';
-
-import '../utils/config.dart';
+import 'package:lezato/utils/config.dart';
 
 class ApiService {
   Future<ResponseRestaurant> getList() async {
