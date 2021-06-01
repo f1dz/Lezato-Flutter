@@ -27,89 +27,106 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
           ),
         ),
         Positioned(
-          top: 150,
+          top: 160 - shrinkOffset,
           left: 8,
           right: 8,
           child: Opacity(
             opacity: (1 - shrinkOffset / expandedHeight),
-            child: Card(
-              elevation: 10,
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Form(
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  restaurant.name,
-                                  style: Theme.of(context).textTheme.headline5,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  size: 18,
-                                  color: Colors.red,
-                                ),
-                                Text(restaurant.city, style: Theme.of(context).textTheme.bodyText1),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  size: 18,
-                                  color: Colors.amber,
-                                ),
-                                Text("${restaurant.rating}")
-                              ],
-                            ),
-                            Row(
-                              children: restaurant.categories
-                                  .map(
-                                    (cat) => Padding(
-                                      padding: EdgeInsets.only(right: 4),
-                                      child: Chip(
-                                        label: Text(cat.name),
-                                        backgroundColor: Colors.white,
-                                        shape: StadiumBorder(side: BorderSide(color: Colors.green)),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                            Chip(
-                              label: Text('Reviews'),
-                              avatar: CircleAvatar(
-                                backgroundColor: Colors.orange,
-                                child: Text(
-                                  restaurant.customerReviews.length.toString(),
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                              backgroundColor: Colors.white,
-                              shape: StadiumBorder(side: BorderSide(color: Colors.orange)),
-                            ),
-                            Text(
-                              restaurant.description,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [BoxShadow(blurRadius: 2, spreadRadius: 0.1, color: Colors.grey)]),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          restaurant.name,
+                          style: Theme.of(context).textTheme.headline5,
                         ),
-                      ),
+                        IconButton(
+                            icon: Icon(Icons.info_outline),
+                            onPressed: () => showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text(restaurant.name),
+                                    content: Text(
+                                      restaurant.description,
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context, "OK");
+                                          },
+                                          child: Text('OK'))
+                                    ],
+                                  ),
+                                ))
+                      ],
                     ),
-                  ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          size: 18,
+                          color: Colors.red,
+                        ),
+                        Text(restaurant.city, style: Theme.of(context).textTheme.bodyText1),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: 18,
+                          color: Colors.amber,
+                        ),
+                        Text("${restaurant.rating}"),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Icon(
+                          Icons.rate_review,
+                          size: 18,
+                          color: Colors.orange,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            print('Reviews');
+                          },
+                          child: Text(
+                            " ${restaurant.customerReviews.length} reviews",
+                            style: TextStyle(decoration: TextDecoration.underline),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: restaurant.categories
+                          .map(
+                            (cat) => Padding(
+                              padding: EdgeInsets.only(right: 4),
+                              child: Chip(
+                                label: Text(cat.name),
+                                backgroundColor: Colors.white,
+                                shape: StadiumBorder(side: BorderSide(color: Colors.green)),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    Text(
+                      restaurant.description,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
               ),
             ),
