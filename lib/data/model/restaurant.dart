@@ -13,6 +13,7 @@ class Restaurant {
       @required this.pictureId,
       @required this.city,
       @required this.rating,
+      this.address,
       this.categories,
       this.menus,
       this.customerReviews});
@@ -21,6 +22,7 @@ class Restaurant {
   String name;
   String description;
   String pictureId;
+  String address;
   String city;
   double rating;
   List<Categories> categories;
@@ -32,6 +34,7 @@ class Restaurant {
       name: json["name"],
       description: json["description"],
       pictureId: json["pictureId"],
+      address: json["address"] == null ? null : json["address"],
       city: json["city"],
       rating: json["rating"].toDouble(),
       categories: json["categories"] == null

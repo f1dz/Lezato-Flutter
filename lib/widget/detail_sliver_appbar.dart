@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 ///
 import 'package:flutter/material.dart';
 import 'package:lezato/data/model/restaurant.dart';
+import 'package:lezato/ui/reviews_screen.dart';
 
 class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
@@ -27,7 +28,7 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
           ),
         ),
         Positioned(
-          top: 160 - shrinkOffset,
+          top: 150 - shrinkOffset,
           left: 8,
           right: 8,
           child: Opacity(
@@ -51,6 +52,7 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
                           style: Theme.of(context).textTheme.headline5,
                         ),
                         IconButton(
+                            padding: EdgeInsets.all(1),
                             icon: Icon(Icons.info_outline),
                             onPressed: () => showDialog(
                                   context: context,
@@ -78,34 +80,44 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
                           size: 18,
                           color: Colors.red,
                         ),
-                        Text(restaurant.city, style: Theme.of(context).textTheme.bodyText1),
+                        Text("${restaurant.address}, ${restaurant.city}",
+                            style: Theme.of(context).textTheme.bodyText1),
                         SizedBox(
                           width: 20,
-                        ),
-                        Icon(
-                          Icons.star,
-                          size: 18,
-                          color: Colors.amber,
-                        ),
-                        Text("${restaurant.rating}"),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Icon(
-                          Icons.rate_review,
-                          size: 18,
-                          color: Colors.orange,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            print('Reviews');
-                          },
-                          child: Text(
-                            " ${restaurant.customerReviews.length} reviews",
-                            style: TextStyle(decoration: TextDecoration.underline),
-                          ),
                         ),
                       ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            size: 18,
+                            color: Colors.amber,
+                          ),
+                          Text("${restaurant.rating}"),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Icon(
+                            Icons.rate_review,
+                            size: 18,
+                            color: Colors.orange,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return ReviewScreen(restaurant: restaurant);
+                              }));
+                            },
+                            child: Text(
+                              " ${restaurant.customerReviews.length} reviews",
+                              style: TextStyle(decoration: TextDecoration.underline),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Row(
                       children: restaurant.categories
