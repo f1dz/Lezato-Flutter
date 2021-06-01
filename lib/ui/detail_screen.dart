@@ -1,10 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/restaurant.dart';
+import 'package:lezato/data/utils/utils.dart';
 import 'package:lezato/provider/app_provider.dart';
+import 'package:lezato/widget/detail_sliver_appbar.dart';
 import 'package:provider/provider.dart';
 
 import '../data/model/food.dart';
@@ -50,25 +51,31 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
         mainAxisSpacing: 4,
         crossAxisSpacing: 4,
         children: menus.map((e) {
-          return Column(
-            children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          alignment: FractionalOffset.center,
-                          image: (e.runtimeType == Food)
-                              ? AssetImage('assets/images/food.jpeg')
-                              : AssetImage('assets/images/drink.jpeg'))),
+          return Container(
+            margin: EdgeInsets.all(4),
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 1)],
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: (e.runtimeType == Food)
+                      ? Image.asset('assets/images/food.png')
+                      : Image.asset('assets/images/drink.png'),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(e.name),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(e.name),
+                ),
+                Text(
+                  Utils.generatePrice(),
+                  style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
           );
         }).toList(),
       ),
@@ -79,80 +86,49 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            pinned: true,
-            floating: true,
-            expandedHeight: 250.0,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(restaurant.name),
-              background: Hero(
-                tag: restaurant.id,
-                child: CachedNetworkImage(
-                  imageUrl: restaurant.getMediumPicture(),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
+          SliverPersistentHeader(delegate: DetailSliverAppBar(expandedHeight: 250, restaurant: restaurant)),
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            restaurant.name,
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                          Container(
-                              padding: EdgeInsets.all(6.0),
-                              decoration:
-                                  BoxDecoration(color: Colors.orange, borderRadius: BorderRadius.circular(6)),
-                              child: Text(
-                                restaurant.rating.toString(),
-                                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-                              )),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            size: 16,
-                            color: Colors.grey,
-                          ),
-                          Text(restaurant.city, style: Theme.of(context).textTheme.bodyText1),
-                        ],
-                      ),
-                      Text(restaurant.description),
-                    ],
-                  ),
-                ),
-              ),
+            child: SizedBox(
+              height: 160,
             ),
           ),
           SliverPadding(
             padding: EdgeInsets.all(4),
             sliver: SliverToBoxAdapter(
-                child: Text(
-              'Foods',
-              style: Theme.of(context).textTheme.headline6,
+                child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.fastfood,
+                    color: Colors.orange,
+                  ),
+                ),
+                Text(
+                  'Foods',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ],
             )),
           ),
           menuList(restaurant.menus.foods),
           SliverPadding(
             padding: EdgeInsets.all(4),
             sliver: SliverToBoxAdapter(
-                child: Text(
-              'Drinks',
-              style: Theme.of(context).textTheme.headline6,
+                child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.local_drink,
+                    color: Colors.orange,
+                  ),
+                ),
+                Text(
+                  'Drinks',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ],
             )),
           ),
           menuList(restaurant.menus.drinks),

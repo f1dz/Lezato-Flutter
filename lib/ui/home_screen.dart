@@ -83,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                         fit: BoxFit.cover,
                         progressIndicatorBuilder: (context, data, _) => Center(
                           child: CircularProgressIndicator(),
-                          widthFactor: 0.3,
+                          widthFactor: 0.5,
                         ),
                       ),
                     )),
