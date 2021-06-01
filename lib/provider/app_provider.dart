@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/response/response_restaurant.dart';
 import 'package:lezato/data/model/response/response_restaurant_detail.dart';
+import 'package:lezato/data/model/review.dart';
 
 enum ResultState { Loading, NoData, HasData, Error }
 
@@ -76,5 +77,17 @@ class AppProvider extends ChangeNotifier {
   void onSearch(String query) {
     _query = query;
     _fetchRestaurants();
+  }
+
+  Future<dynamic> postReview(Review review) async {
+    try {
+      final response = await apiService.postReview(review);
+
+      if (!response.error) _fetchRestaurant(review.id);
+    } catch (e) {
+      _state = ResultState.Error;
+      notifyListeners();
+      return _message = 'Error --> $e';
+    }
   }
 }
