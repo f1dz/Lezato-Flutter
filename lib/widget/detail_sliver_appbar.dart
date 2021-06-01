@@ -122,8 +122,8 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
                     Row(
                       children: restaurant.categories
                           .map(
-                            (cat) => Padding(
-                              padding: EdgeInsets.only(right: 4),
+                            (cat) => Transform(
+                              transform: Matrix4.identity()..scale(0.8),
                               child: Chip(
                                 label: Text(cat.name),
                                 backgroundColor: Colors.white,
@@ -137,6 +137,7 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
                       restaurant.description,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.black87),
                     ),
                   ],
                 ),

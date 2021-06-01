@@ -92,7 +92,7 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
           SliverPersistentHeader(delegate: DetailSliverAppBar(expandedHeight: 250, restaurant: restaurant)),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: 100,
+              height: 120,
             ),
           ),
           SliverPadding(
