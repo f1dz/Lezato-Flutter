@@ -72,7 +72,7 @@ class ReviewScreen extends StatelessWidget {
               CircleAvatar(
                 radius: 24,
                 child: Text(
-                  review.name[0],
+                  review.name[0] ?? "X",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
               ),

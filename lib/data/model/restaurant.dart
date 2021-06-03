@@ -45,7 +45,7 @@ class Restaurant {
           ? null
           : List<Review>.from((json["customerReviews"] as List)
               .map((x) => Review.fromJson(x))
-              .where((review) => review.review != null)));
+              .where((review) => review.review != null && review.name.length > 0)));
 
   String getSmallPicture() => Config.IMG_SMALL_URL + this.pictureId;
 

@@ -6,13 +6,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 ///
 import 'package:flutter/material.dart';
 import 'package:lezato/data/model/restaurant.dart';
+import 'package:lezato/provider/app_provider.dart';
 import 'package:lezato/ui/reviews_screen.dart';
 
 class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
   final Restaurant restaurant;
+  final AppProvider provider;
 
-  DetailSliverAppBar({@required this.expandedHeight, @required this.restaurant});
+  DetailSliverAppBar({@required this.expandedHeight, @required this.restaurant, this.provider});
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -124,7 +126,7 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute(builder: (context) {
                                 return ReviewScreen(restaurant: restaurant);
-                              }));
+                              })).then((value) => setState(provider));
                             },
                             child: Text(
                               " ${restaurant.customerReviews.length} reviews",
@@ -172,4 +174,8 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
+
+  setState(AppProvider provider) {
+    provider.getRestaurant(restaurant.id);
+  }
 }

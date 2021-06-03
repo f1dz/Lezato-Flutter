@@ -10,26 +10,25 @@ import 'package:provider/provider.dart';
 
 import '../data/model/food.dart';
 
-class DetailScreen extends StatefulWidget {
+class DetailScreen extends StatelessWidget {
   final Restaurant restaurant;
   DetailScreen({@required this.restaurant});
 
   @override
-  _DetailScreenState createState() => _DetailScreenState();
-}
-
-class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderStateMixin {
-  @override
   Widget build(BuildContext context) {
+    AppProvider provider;
     return ChangeNotifierProvider(
-      create: (_) => AppProvider(apiService: ApiService()).getRestaurant(widget.restaurant.id),
+      create: (_) {
+        provider = AppProvider(apiService: ApiService());
+        return provider.getRestaurant(restaurant.id);
+      },
       child: Scaffold(
         body: Consumer<AppProvider>(
           builder: (context, state, _) {
             if (state.state == ResultState.Loading) {
               return Center(child: CircularProgressIndicator());
             } else if (state.state == ResultState.HasData) {
-              return screen(state.restaurant.restaurant);
+              return screen(context, state.restaurant.restaurant, provider);
             } else if (state.state == ResultState.NoData) {
               return Center(child: Text(state.message));
             } else if (state.state == ResultState.Error) {
@@ -92,10 +91,11 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
     );
   }
 
-  screen(Restaurant restaurant) {
+  screen(BuildContext context, Restaurant restaurant, AppProvider provider) {
     return CustomScrollView(
       slivers: [
-        SliverPersistentHeader(delegate: DetailSliverAppBar(expandedHeight: 250, restaurant: restaurant)),
+        SliverPersistentHeader(
+            delegate: DetailSliverAppBar(expandedHeight: 250, restaurant: restaurant, provider: provider)),
         SliverToBoxAdapter(
           child: SizedBox(
             height: 120,

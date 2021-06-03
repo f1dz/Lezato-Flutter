@@ -11,11 +11,13 @@ class ReviewDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     var _nameTextController = TextEditingController();
     var _reviewTextController = TextEditingController();
+    var _formKey = GlobalKey<FormState>();
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
       title: Text("Add Review"),
       content: Form(
+        key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -27,6 +29,10 @@ class ReviewDialog extends StatelessWidget {
               child: TextFormField(
                 textCapitalization: TextCapitalization.words,
                 controller: _nameTextController,
+                validator: (value) {
+                  if (value.isEmpty || value == null) return "Name required";
+                  return null;
+                },
                 decoration: InputDecoration(
                     hintText: "Name",
                     suffixIcon: Icon(Icons.person),
@@ -44,6 +50,10 @@ class ReviewDialog extends StatelessWidget {
                 textCapitalization: TextCapitalization.sentences,
                 maxLines: 5,
                 controller: _reviewTextController,
+                validator: (value) {
+                  if (value.isEmpty || value == null) return "Review required";
+                  return null;
+                },
                 decoration: InputDecoration(
                     hintText: "Review",
                     suffixIcon: Icon(Icons.rate_review),
@@ -62,12 +72,19 @@ class ReviewDialog extends StatelessWidget {
             child: Text("Cancel")),
         ElevatedButton(
             onPressed: () {
-              Review review = Review(
-                id: id,
-                name: _nameTextController.text,
-                review: _reviewTextController.text,
-              );
-              provider.postReview(review).then((value) => Navigator.pop(context));
+              if (_formKey.currentState.validate()) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sending...")));
+                Review review = Review(
+                  id: id,
+                  name: _nameTextController.text,
+                  review: _reviewTextController.text,
+                );
+                provider.postReview(review).then((value) {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Success!")));
+                  Navigator.pop(context);
+                });
+              }
             },
             child: Text("Save"))
       ],
