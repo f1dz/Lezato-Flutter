@@ -16,15 +16,19 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppProvider provider;
     return ChangeNotifierProvider(
-      create: (_) => AppProvider(apiService: ApiService()).getRestaurant(restaurant.id),
+      create: (_) {
+        provider = AppProvider(apiService: ApiService());
+        return provider.getRestaurant(restaurant.id);
+      },
       child: Scaffold(
         body: Consumer<AppProvider>(
           builder: (context, state, _) {
             if (state.state == ResultState.Loading) {
               return Center(child: CircularProgressIndicator());
             } else if (state.state == ResultState.HasData) {
-              return screen(context, state.restaurant.restaurant);
+              return screen(context, state.restaurant.restaurant, provider);
             } else if (state.state == ResultState.NoData) {
               return Center(child: Text(state.message));
             } else if (state.state == ResultState.Error) {
@@ -87,10 +91,11 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  screen(BuildContext context, Restaurant restaurant) {
+  screen(BuildContext context, Restaurant restaurant, AppProvider provider) {
     return CustomScrollView(
       slivers: [
-        SliverPersistentHeader(delegate: DetailSliverAppBar(expandedHeight: 250, restaurant: restaurant)),
+        SliverPersistentHeader(
+            delegate: DetailSliverAppBar(expandedHeight: 250, restaurant: restaurant, provider: provider)),
         SliverToBoxAdapter(
           child: SizedBox(
             height: 120,
