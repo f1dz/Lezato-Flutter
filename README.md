@@ -1,6 +1,6 @@
 # Lezato
 
-An restaurant app for hungry belly. [1st](https://github.com/f1dz/Lezato-Flutter/releases/tag/1.0.0) and [2nd](https://github.com/f1dz/Lezato-Flutter/releases/tag/2.0.0) submissions for [Flutter Fundamental](https://www.dicoding.com/academies/195) at Dicoding Academy 
+A restaurant app for the hungry belly. [1st](https://github.com/f1dz/Lezato-Flutter/releases/tag/1.0.0) and [2nd](https://github.com/f1dz/Lezato-Flutter/releases/tag/2.0.1) submissions for [Flutter Fundamental](https://www.dicoding.com/academies/195) at Dicoding Academy 
 
 ## Screen Shots
 
