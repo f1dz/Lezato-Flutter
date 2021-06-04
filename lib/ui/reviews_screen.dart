@@ -4,6 +4,7 @@ import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/data/model/review.dart';
 import 'package:lezato/provider/app_provider.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import 'review_dialog.dart';
@@ -43,7 +44,9 @@ class ReviewScreen extends StatelessWidget {
                     });
                 break;
               case ResultState.Error:
-                return Center(child: Container(padding: EdgeInsets.all(16), child: Text(provider.message)));
+                return Center(
+                  child: Lottie.asset('assets/json/no_internet.json'),
+                );
                 break;
             }
             return Container();
