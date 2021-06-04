@@ -3,7 +3,7 @@ import 'package:lezato/data/model/categories.dart';
 import 'package:lezato/data/model/review.dart';
 import 'package:lezato/utils/config.dart';
 
-import 'menu.dart';
+import 'menus.dart';
 
 class Restaurant {
   Restaurant(
@@ -26,7 +26,7 @@ class Restaurant {
   String city;
   double rating;
   List<Categories> categories;
-  Menu menus;
+  Menus menus;
   List<Review> customerReviews;
 
   factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(
@@ -40,7 +40,7 @@ class Restaurant {
       categories: json["categories"] == null
           ? null
           : List<Categories>.from(json['categories'].map((x) => Categories.fromJson(x))),
-      menus: json["menus"] == null ? null : Menu.fromJson(json["menus"]),
+      menus: json["menus"] == null ? null : Menus.fromJson(json["menus"]),
       customerReviews: json["customerReviews"] == null
           ? null
           : List<Review>.from((json["customerReviews"] as List)

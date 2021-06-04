@@ -2,14 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:lezato/data/api/api_service.dart';
+import 'package:lezato/data/model/menus.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
 import 'package:lezato/utils/utils.dart';
 import 'package:lezato/widget/detail_sliver_appbar.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-
-import '../data/model/food.dart';
 
 class DetailScreen extends StatelessWidget {
   final Restaurant restaurant;
@@ -50,7 +49,7 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  menuList(List<dynamic> menus) {
+  menuList(List<dynamic> menus, MenuType menuType) {
     return SliverPadding(
       padding: EdgeInsets.all(4),
       sliver: SliverGrid.count(
@@ -69,7 +68,7 @@ class DetailScreen extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: (e.runtimeType == Food)
+                  child: (menuType == MenuType.food)
                       ? Image.asset('assets/images/food.png')
                       : Image.asset('assets/images/drink.png'),
                 ),
@@ -121,7 +120,7 @@ class DetailScreen extends StatelessWidget {
             ],
           )),
         ),
-        menuList(restaurant.menus.foods),
+        menuList(restaurant.menus.foods, MenuType.food),
         SliverPadding(
           padding: EdgeInsets.all(4),
           sliver: SliverToBoxAdapter(
@@ -141,7 +140,7 @@ class DetailScreen extends StatelessWidget {
             ],
           )),
         ),
-        menuList(restaurant.menus.drinks),
+        menuList(restaurant.menus.drinks, MenuType.drink),
       ],
     );
   }
