@@ -6,6 +6,7 @@ import 'package:lezato/data/model/response/response_restaurant_detail.dart';
 import 'package:lezato/data/model/response/response_review.dart';
 import 'package:lezato/data/model/review.dart';
 import 'package:lezato/utils/config.dart';
+import 'package:lezato/utils/const_string.dart';
 
 class ApiService {
   Future<ResponseRestaurant> getList() async {
@@ -14,7 +15,7 @@ class ApiService {
       if (response.statusCode == 200) {
         return ResponseRestaurant.fromJson(json.decode(response.body));
       } else {
-        throw Exception('Failed to get restaurants');
+        throw Exception(ConstString.failed_get_data);
       }
     } catch (e) {
       throw Exception(e.message);
@@ -27,7 +28,7 @@ class ApiService {
       if (response.statusCode == 200) {
         return ResponseRestaurant.fromJson(json.decode(response.body));
       } else {
-        throw Exception('Failed to get restaurants');
+        throw Exception(ConstString.failed_get_data);
       }
     } catch (e) {
       throw Exception(e.message);
@@ -39,7 +40,7 @@ class ApiService {
     if (response.statusCode == 200) {
       return ResponseRestaurantDetail.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to get detail restaurant');
+      throw Exception(ConstString.failed_get_data);
     }
   }
 
@@ -56,7 +57,7 @@ class ApiService {
     if (response.statusCode == 200) {
       return ResponseReview.fromJson(json.decode(response.body));
     } else {
-      throw Exception("Failed to post review");
+      throw Exception(ConstString.failed_post_review);
     }
   }
 }
