@@ -6,6 +6,7 @@ import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
 import 'package:lezato/utils/utils.dart';
 import 'package:lezato/widget/detail_sliver_appbar.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../data/model/food.dart';
@@ -35,7 +36,7 @@ class DetailScreen extends StatelessWidget {
               return Center(
                 child: Container(
                   padding: EdgeInsets.all(16),
-                  child: Text(state.message),
+                  child: Lottie.asset('assets/json/no_internet.json'),
                 ),
               );
             } else {

@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
               } else if (state.state == ResultState.Error) {
                 return SliverFillRemaining(
                   child: Center(
-                    child: Text(state.message),
+                    child: Lottie.asset('assets/json/no_internet.json'),
                   ),
                 );
               } else {
