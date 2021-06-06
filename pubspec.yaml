@@ -19,9 +19,16 @@ dependencies:
   provider: ^5.0.0
   intl: ^0.17.0
 
+  #Hive Database
+  hive: ^2.0.4
+  hive_flutter: ^1.0.0
+  path_provider: ^2.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_generator: ^1.1.0
+  build_runner: ^2.0.4
 
 flutter:
   uses-material-design: true

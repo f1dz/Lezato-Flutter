@@ -1,10 +1,14 @@
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 import 'package:lezato/data/model/categories.dart';
 import 'package:lezato/data/model/review.dart';
 import 'package:lezato/utils/config.dart';
 
 import 'menus.dart';
 
+part 'restaurant.g.dart';
+
+@HiveType(typeId: 0)
 class Restaurant {
   Restaurant(
       {@required this.id,
@@ -18,15 +22,25 @@ class Restaurant {
       this.menus,
       this.customerReviews});
 
+  @HiveField(0)
   String id;
+  @HiveField(1)
   String name;
+  @HiveField(2)
   String description;
+  @HiveField(3)
   String pictureId;
+  @HiveField(4)
   String address;
+  @HiveField(5)
   String city;
+  @HiveField(6)
   double rating;
+  @HiveField(7)
   List<Categories> categories;
+  @HiveField(8)
   Menus menus;
+  @HiveField(9)
   List<Review> customerReviews;
 
   factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(

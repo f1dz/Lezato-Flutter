@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
 import 'package:lezato/ui/reviews_screen.dart';
+import 'package:lezato/widget/favorite_button.dart';
 
 class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
@@ -68,26 +69,34 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
                           restaurant.name,
                           style: Theme.of(context).textTheme.headline5,
                         ),
-                        IconButton(
-                            padding: EdgeInsets.all(1),
-                            icon: Icon(Icons.info_outline),
-                            onPressed: () => showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: Text(restaurant.name),
-                                    content: Text(
-                                      restaurant.description,
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context, "OK");
-                                          },
-                                          child: Text('OK'))
-                                    ],
-                                  ),
-                                ))
+                        Row(
+                          children: [
+                            IconButton(
+                                padding: EdgeInsets.all(1),
+                                icon: Icon(Icons.info_outline),
+                                onPressed: () => showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: Text(restaurant.name),
+                                        content: Text(
+                                          restaurant.description,
+                                          style: TextStyle(fontSize: 14),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context, "OK");
+                                              },
+                                              child: Text('OK'))
+                                        ],
+                                      ),
+                                    )),
+                            FavoriteButton(
+                              restaurant: restaurant,
+                              provider: provider,
+                            )
+                          ],
+                        ),
                       ],
                     ),
                     Row(
