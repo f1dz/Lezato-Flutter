@@ -9,10 +9,8 @@ import 'package:lezato/data/model/review.dart';
 enum ResultState { Loading, NoData, HasData, Error }
 
 class AppProvider extends ChangeNotifier {
-  final ApiService apiService;
+  final ApiService apiService = ApiService();
   final DbService dbService = DbService();
-
-  AppProvider({@required this.apiService});
 
   ResponseRestaurant _responseRestaurant;
   ResponseRestaurantDetail _responseRestaurantDetail;

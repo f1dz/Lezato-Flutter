@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
 import 'package:lezato/widget/restaurant_item.dart';
@@ -14,7 +13,7 @@ class FavoritesScreen extends StatelessWidget {
         title: Text('Favorite Restaurants'),
       ),
       body: ChangeNotifierProvider(
-        create: (BuildContext context) => AppProvider(apiService: ApiService()).getFavoriteRestaurants(),
+        create: (BuildContext context) => AppProvider().getFavoriteRestaurants(),
         child: Consumer<AppProvider>(
           builder: (context, provider, _) {
             switch (provider.state) {

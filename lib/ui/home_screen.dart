@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
 import 'package:lezato/ui/detail_screen.dart';
@@ -15,7 +14,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: ChangeNotifierProvider(
-      create: (_) => AppProvider(apiService: ApiService()).getRestaurants(),
+      create: (_) => AppProvider().getRestaurants(),
       child: CustomScrollView(
         slivers: [
           Consumer<AppProvider>(

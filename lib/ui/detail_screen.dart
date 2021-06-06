@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/menus.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
@@ -19,7 +18,7 @@ class DetailScreen extends StatelessWidget {
     AppProvider provider;
     return ChangeNotifierProvider(
       create: (_) {
-        provider = AppProvider(apiService: ApiService());
+        provider = AppProvider();
         return provider.getRestaurant(restaurant.id);
       },
       child: Scaffold(
