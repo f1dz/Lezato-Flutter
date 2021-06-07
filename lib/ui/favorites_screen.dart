@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
 import 'package:lezato/widget/restaurant_item.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class FavoritesScreen extends StatelessWidget {
@@ -21,7 +22,13 @@ class FavoritesScreen extends StatelessWidget {
                 return Center(child: CircularProgressIndicator());
                 break;
               case ResultState.NoData:
-                return Center(child: Text(provider.message));
+                return Center(
+                    child: Column(
+                  children: [
+                    Lottie.asset('assets/json/no_favorites.json'),
+                    Text(provider.message),
+                  ],
+                ));
                 break;
               case ResultState.HasData:
                 List<Restaurant> restaurants = provider.favoriteRestaurants;

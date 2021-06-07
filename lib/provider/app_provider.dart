@@ -111,7 +111,7 @@ class AppProvider extends ChangeNotifier {
       } else {
         _state = ResultState.NoData;
         notifyListeners();
-        return _message = "No data found";
+        return _message = "No favorite restaurants yet";
       }
     } catch (e) {
       _state = ResultState.Error;
