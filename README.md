@@ -1,8 +1,14 @@
-# Lezato
+# 🍔 Lezato
 
-A restaurant app for the hungry belly. [1st](https://github.com/f1dz/Lezato-Flutter/releases/tag/1.0.0), [2nd](https://github.com/f1dz/Lezato-Flutter/releases/tag/2.0.3) and [3rd/Final](https://github.com/f1dz/Lezato-Flutter/releases/tag/3.0.1) submissions for [Flutter Fundamental](https://www.dicoding.com/academies/195) at Dicoding Academy 
+A restaurant app for the hungry belly. Submissions for [Flutter Fundamental](https://www.dicoding.com/academies/195) at Dicoding Academy 
+- [Submission 1](https://github.com/f1dz/Lezato-Flutter/releases/tag/1.0.0)
+- [Submission 2](https://github.com/f1dz/Lezato-Flutter/releases/tag/2.0.3)
+- [Final Project](https://github.com/f1dz/Lezato-Flutter/releases/tag/3.0.1)
 
-## Libraries Used
+## 🛑 Warning! ⚠️ 
+Use this repository as reference and study only. Plagiarism will hurt you and will not be tolerated
+
+## 📚 Libraries Used
 - [Cached Network Image](https://pub.dev/packages/cached_network_image)
 - [Lottie](https://pub.dev/packages/lottie)
 - [Http](https://pub.dev/packages/http)
@@ -14,7 +20,7 @@ A restaurant app for the hungry belly. [1st](https://github.com/f1dz/Lezato-Flut
 - [Hive NoSQL Database](https://pub.dev/packages/hive)
 - [Path Provider](https://pub.dev/packages/path_provider)
 
-## Screen Shots
+## 📷 Screen Shots
 
 Splash Screen | Home Screen | Search
 :----------:|:-------------:|:--------:
