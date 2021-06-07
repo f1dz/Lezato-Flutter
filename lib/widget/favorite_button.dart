@@ -21,7 +21,7 @@ class FavoriteButton extends StatelessWidget {
             break;
           case ResultState.NoData:
             return IconButton(
-              icon: Icon(Icons.favorite_outline),
+              icon: Icon(Icons.favorite_outline, color: Colors.black87),
               onPressed: () {
                 provider.toggleFavorite(restaurant).then((value) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Saved to favorite")));
@@ -42,7 +42,7 @@ class FavoriteButton extends StatelessWidget {
                     },
                   )
                 : IconButton(
-                    icon: Icon(Icons.favorite_outline),
+                    icon: Icon(Icons.favorite_outline, color: Colors.black87),
                     onPressed: () {
                       provider.toggleFavorite(restaurant).then((value) {
                         ScaffoldMessenger.of(context)
@@ -52,7 +52,7 @@ class FavoriteButton extends StatelessWidget {
                   );
             break;
           case ResultState.Error:
-            return Icon(Icons.favorite_outline);
+            return Icon(Icons.favorite_outline, color: Colors.black87);
             break;
         }
         return Container();

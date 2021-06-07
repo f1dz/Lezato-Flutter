@@ -6,9 +6,11 @@ import 'package:lezato/utils/config.dart';
 
 class DbService {
   Box<dynamic> box;
+  Box<dynamic> theme;
 
   DbService() {
     box = Hive.box(Config.BOX_FAVORITES);
+    theme = Hive.box(Config.BOX_DARK_MODE);
   }
 
   Future<List<Restaurant>> getFavorites() async {
@@ -26,5 +28,14 @@ class DbService {
     } catch (e) {
       throw HiveError(e.toString());
     }
+  }
+
+  Future<bool> darkMode(bool value) async {
+    theme.put('darkMode', value);
+    return value;
+  }
+
+  bool isDarkMode() {
+    return theme.get('darkMode', defaultValue: false);
   }
 }

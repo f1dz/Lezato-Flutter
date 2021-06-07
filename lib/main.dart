@@ -39,25 +39,35 @@ void main() async {
   Hive.registerAdapter(CategoriesAdapter());
   Hive.registerAdapter(ReviewAdapter());
   await Hive.openBox(Config.BOX_FAVORITES);
+  await Hive.openBox(Config.BOX_DARK_MODE);
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Lezato',
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-        ),
-        home: SplashScreen(),
-        navigatorKey: navigatorKey,
-        initialRoute: SplashScreen.routeName,
-        routes: {
-          SplashScreen.routeName: (context) => SplashScreen(),
-          HomeScreen.routeName: (context) => HomeScreen(),
-          DetailScreen.routeName: (context) =>
-              DetailScreen(restaurant: ModalRoute.of(context).settings.arguments as Restaurant),
-        });
+    return ValueListenableBuilder(
+      valueListenable: Hive.box(Config.BOX_DARK_MODE).listenable(),
+      builder: (BuildContext context, box, Widget child) {
+        var darkMode = box.get('darkMode', defaultValue: false);
+        return MaterialApp(
+            title: 'Lezato',
+            themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
+            theme: ThemeData(
+              primarySwatch: Colors.red,
+            ),
+            darkTheme: ThemeData.dark(),
+            home: SplashScreen(),
+            navigatorKey: navigatorKey,
+            initialRoute: SplashScreen.routeName,
+            routes: {
+              SplashScreen.routeName: (context) => SplashScreen(),
+              HomeScreen.routeName: (context) => HomeScreen(),
+              DetailScreen.routeName: (context) =>
+                  DetailScreen(restaurant: ModalRoute.of(context).settings.arguments as Restaurant),
+            });
+      },
+    );
   }
 }

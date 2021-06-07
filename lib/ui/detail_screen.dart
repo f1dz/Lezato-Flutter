@@ -49,7 +49,7 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  menuList(List<dynamic> menus, MenuType menuType) {
+  menuList(BuildContext context, List<dynamic> menus, MenuType menuType) {
     return SliverPadding(
       padding: EdgeInsets.all(4),
       sliver: SliverGrid.count(
@@ -77,6 +77,7 @@ class DetailScreen extends StatelessWidget {
                   child: Text(
                     Utils.camelCase(e.name),
                     textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Text(
@@ -120,7 +121,7 @@ class DetailScreen extends StatelessWidget {
             ],
           )),
         ),
-        menuList(restaurant.menus.foods, MenuType.food),
+        menuList(context, restaurant.menus.foods, MenuType.food),
         SliverPadding(
           padding: EdgeInsets.all(4),
           sliver: SliverToBoxAdapter(
@@ -140,7 +141,7 @@ class DetailScreen extends StatelessWidget {
             ],
           )),
         ),
-        menuList(restaurant.menus.drinks, MenuType.drink),
+        menuList(context, restaurant.menus.drinks, MenuType.drink),
       ],
     );
   }
