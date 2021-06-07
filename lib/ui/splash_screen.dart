@@ -4,6 +4,7 @@ import 'package:lezato/ui/home_screen.dart';
 import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatefulWidget {
+  static final String routeName = "/splash_screen";
   @override
   State<StatefulWidget> createState() => _SplashScreenState();
 }
@@ -39,9 +40,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   openHome() {
     Future.delayed(Duration(seconds: 3)).then((value) {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
-        return HomeScreen();
-      }));
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(),
+          ),
+          (route) => false);
     });
   }
 }

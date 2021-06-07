@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/menus.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
@@ -11,6 +10,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class DetailScreen extends StatelessWidget {
+  static final routeName = "/detail_screen";
   final Restaurant restaurant;
   DetailScreen({@required this.restaurant});
 
@@ -19,7 +19,7 @@ class DetailScreen extends StatelessWidget {
     AppProvider provider;
     return ChangeNotifierProvider(
       create: (_) {
-        provider = AppProvider(apiService: ApiService());
+        provider = AppProvider();
         return provider.getRestaurant(restaurant.id);
       },
       child: Scaffold(
@@ -49,7 +49,7 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  menuList(List<dynamic> menus, MenuType menuType) {
+  menuList(BuildContext context, List<dynamic> menus, MenuType menuType) {
     return SliverPadding(
       padding: EdgeInsets.all(4),
       sliver: SliverGrid.count(
@@ -77,6 +77,7 @@ class DetailScreen extends StatelessWidget {
                   child: Text(
                     Utils.camelCase(e.name),
                     textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Text(
@@ -120,7 +121,7 @@ class DetailScreen extends StatelessWidget {
             ],
           )),
         ),
-        menuList(restaurant.menus.foods, MenuType.food),
+        menuList(context, restaurant.menus.foods, MenuType.food),
         SliverPadding(
           padding: EdgeInsets.all(4),
           sliver: SliverToBoxAdapter(
@@ -140,7 +141,7 @@ class DetailScreen extends StatelessWidget {
             ],
           )),
         ),
-        menuList(restaurant.menus.drinks, MenuType.drink),
+        menuList(context, restaurant.menus.drinks, MenuType.drink),
       ],
     );
   }

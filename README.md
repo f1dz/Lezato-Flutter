@@ -11,3 +11,7 @@ Splash Screen | Home Screen | Search
 Detail Screen | Add Review | Reviews
 :----------:|:-------------:|:--------:
 <img src="/assets/images/detail.png" width=300/> | <img src="/assets/images/review_add.png" width=300/> | <img src="/assets/images/review.png" width=300/>
+
+Home Dark | Setting | Favorites
+:----------:|:-------------:|:--------:
+<img src="/assets/images/home_dark.png" width=300/> | <img src="/assets/images/setting_dark.png" width=300/> | <img src="/assets/images/favorites.png" width=300/>

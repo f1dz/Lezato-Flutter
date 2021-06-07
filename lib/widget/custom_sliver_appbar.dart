@@ -4,6 +4,8 @@
 ///
 import 'package:flutter/material.dart';
 import 'package:lezato/provider/app_provider.dart';
+import 'package:lezato/ui/favorites_screen.dart';
+import 'package:lezato/ui/setting_screen.dart';
 
 class CustomSliverAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
@@ -22,32 +24,63 @@ class CustomSliverAppBar extends SliverPersistentHeaderDelegate {
           fit: BoxFit.cover,
         ),
         Positioned(
+          top: 0,
+          right: 16,
+          child: SafeArea(
+            child: IconButton(
+              icon: Icon(Icons.settings),
+              color: Colors.red,
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingScreen()));
+              },
+            ),
+          ),
+        ),
+        Positioned(
           bottom: -25,
           left: 16,
           right: 16,
           child: Opacity(
             opacity: (1 - shrinkOffset / expandedHeight),
-            child: Card(
-              elevation: 10,
-              child: SizedBox(
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                child: Form(
-                  child: Container(
-                      child: TextFormField(
-                    onChanged: (value) {
-                      if (value.length >= 3)
-                        provider.onSearch(value);
-                      else if (value.length == 0) provider.onSearch(value);
-                    },
-                    decoration: InputDecoration(
-                        hintText: "Search restaurant or menu",
-                        suffixIcon: Icon(Icons.search),
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.only(left: 10, top: 15)),
-                  )),
+            child: Row(
+              children: [
+                Card(
+                  elevation: 10,
+                  child: SizedBox(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width - 100,
+                    child: Form(
+                      child: Container(
+                          child: TextFormField(
+                        onChanged: (value) {
+                          if (value.length >= 3)
+                            provider.onSearch(value);
+                          else if (value.length == 0) provider.onSearch(value);
+                        },
+                        decoration: InputDecoration(
+                            hintText: "Search restaurant or menu",
+                            suffixIcon: Icon(Icons.search),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.only(left: 10, top: 15)),
+                      )),
+                    ),
+                  ),
                 ),
-              ),
+                Card(
+                  elevation: 10,
+                  child: SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: IconButton(
+                      icon: Icon(Icons.favorite),
+                      color: Colors.red,
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => FavoritesScreen()));
+                      },
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
         ),

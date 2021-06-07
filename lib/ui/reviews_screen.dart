@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lezato/data/api/api_service.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/data/model/review.dart';
 import 'package:lezato/provider/app_provider.dart';
@@ -24,7 +23,7 @@ class ReviewScreen extends StatelessWidget {
       ),
       body: Container(
         child: ChangeNotifierProvider(
-          create: (_) => AppProvider(apiService: ApiService()).getRestaurant(restaurant.id),
+          create: (_) => AppProvider().getRestaurant(restaurant.id),
           child: Consumer<AppProvider>(builder: (context, provider, _) {
             _provider = provider;
             switch (provider.state) {

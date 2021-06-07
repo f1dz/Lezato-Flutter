@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:lezato/data/model/restaurant.dart';
 import 'package:lezato/provider/app_provider.dart';
 import 'package:lezato/ui/reviews_screen.dart';
+import 'package:lezato/widget/favorite_button.dart';
 
 class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
@@ -66,28 +67,39 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
                       children: [
                         Text(
                           restaurant.name,
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.headline5.copyWith(color: Colors.black87),
                         ),
-                        IconButton(
-                            padding: EdgeInsets.all(1),
-                            icon: Icon(Icons.info_outline),
-                            onPressed: () => showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: Text(restaurant.name),
-                                    content: Text(
-                                      restaurant.description,
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context, "OK");
-                                          },
-                                          child: Text('OK'))
-                                    ],
-                                  ),
-                                ))
+                        Row(
+                          children: [
+                            IconButton(
+                                padding: EdgeInsets.all(1),
+                                icon: Icon(
+                                  Icons.info_outline,
+                                  color: Colors.black87,
+                                ),
+                                onPressed: () => showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: Text(restaurant.name),
+                                        content: Text(
+                                          restaurant.description,
+                                          style: TextStyle(fontSize: 14),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context, "OK");
+                                              },
+                                              child: Text('OK'))
+                                        ],
+                                      ),
+                                    )),
+                            FavoriteButton(
+                              restaurant: restaurant,
+                              provider: provider,
+                            )
+                          ],
+                        ),
                       ],
                     ),
                     Row(
@@ -98,7 +110,7 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
                           color: Colors.red,
                         ),
                         Text("${restaurant.address}, ${restaurant.city}",
-                            style: Theme.of(context).textTheme.bodyText1),
+                            style: Theme.of(context).textTheme.bodyText1.copyWith(color: Colors.black87)),
                         SizedBox(
                           width: 20,
                         ),
@@ -113,7 +125,10 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
                             size: 18,
                             color: Colors.amber,
                           ),
-                          Text("${restaurant.rating}"),
+                          Text(
+                            "${restaurant.rating}",
+                            style: TextStyle(color: Colors.black87),
+                          ),
                           SizedBox(
                             width: 20,
                           ),
@@ -130,7 +145,7 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
                             },
                             child: Text(
                               " ${restaurant.customerReviews.length} reviews",
-                              style: TextStyle(decoration: TextDecoration.underline),
+                              style: TextStyle(decoration: TextDecoration.underline, color: Colors.black87),
                             ),
                           ),
                         ],
@@ -142,7 +157,10 @@ class DetailSliverAppBar extends SliverPersistentHeaderDelegate {
                             (cat) => Transform(
                               transform: Matrix4.identity()..scale(0.8),
                               child: Chip(
-                                label: Text(cat.name),
+                                label: Text(
+                                  cat.name,
+                                  style: TextStyle(color: Colors.black87),
+                                ),
                                 backgroundColor: Colors.white,
                                 shape: StadiumBorder(side: BorderSide(color: Colors.green)),
                               ),
