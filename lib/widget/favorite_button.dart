@@ -20,7 +20,14 @@ class FavoriteButton extends StatelessWidget {
             return Icon(Icons.favorite_outline);
             break;
           case ResultState.NoData:
-            return Icon(Icons.favorite_outline);
+            return IconButton(
+              icon: Icon(Icons.favorite_outline),
+              onPressed: () {
+                provider.toggleFavorite(restaurant).then((value) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Saved to favorite")));
+                });
+              },
+            );
             break;
           case ResultState.HasData:
             return provider.favoriteRestaurants.where((element) => element.id == restaurant.id).isNotEmpty
@@ -48,7 +55,7 @@ class FavoriteButton extends StatelessWidget {
             return Icon(Icons.favorite_outline);
             break;
         }
-        return Icon(Icons.favorite_outline);
+        return Container();
       }),
     );
   }
