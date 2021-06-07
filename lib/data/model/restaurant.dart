@@ -61,6 +61,20 @@ class Restaurant {
               .map((x) => Review.fromJson(x))
               .where((review) => review.review != null && review.name.length > 0)));
 
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+        "pictureId": pictureId,
+        "address": address,
+        "city": city,
+        "rating": rating,
+        "categories": categories == null ? null : List<dynamic>.from(categories.map((e) => e.toJson())),
+        "menus": menus == null ? null : menus.toJson(),
+        "customerReviews":
+            customerReviews == null ? null : List<dynamic>.from(customerReviews.map((e) => e.toJson()))
+      };
+
   String getSmallPicture() => Config.IMG_SMALL_URL + this.pictureId;
 
   String getMediumPicture() => Config.IMG_MEDIUM_URL + this.pictureId;

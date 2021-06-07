@@ -10,6 +10,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class DetailScreen extends StatelessWidget {
+  static final routeName = "/detail_screen";
   final Restaurant restaurant;
   DetailScreen({@required this.restaurant});
 

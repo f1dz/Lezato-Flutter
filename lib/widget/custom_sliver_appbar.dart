@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:lezato/provider/app_provider.dart';
 import 'package:lezato/ui/favorites_screen.dart';
+import 'package:lezato/ui/setting_screen.dart';
 
 class CustomSliverAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
@@ -26,9 +27,12 @@ class CustomSliverAppBar extends SliverPersistentHeaderDelegate {
           top: 0,
           right: 16,
           child: SafeArea(
-            child: Icon(
-              Icons.settings,
+            child: IconButton(
+              icon: Icon(Icons.settings),
               color: Colors.red,
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingScreen()));
+              },
             ),
           ),
         ),
