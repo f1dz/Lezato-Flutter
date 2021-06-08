@@ -3,7 +3,7 @@
 A restaurant app for the hungry belly. Submissions for [Flutter Fundamental](https://www.dicoding.com/academies/195) at Dicoding Academy 
 - [Submission 1](https://github.com/f1dz/Lezato-Flutter/releases/tag/1.0.0)
 - [Submission 2](https://github.com/f1dz/Lezato-Flutter/releases/tag/2.0.3)
-- [Final Project](https://github.com/f1dz/Lezato-Flutter/releases/tag/3.0.1)
+- [Final Project](https://github.com/f1dz/Lezato-Flutter/releases/tag/3.0.2)
 
 ## 🛑 Warning! ⚠️ 
 Use this repository as reference and study only. Plagiarism will hurt you and will not be tolerated
