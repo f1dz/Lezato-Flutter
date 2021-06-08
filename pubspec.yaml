@@ -3,7 +3,7 @@ description: An restaurant app for hungry belly.
 
 publish_to: 'none'
 
-version: 3.0.1+6
+version: 3.0.2+7
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -32,6 +32,7 @@ dev_dependencies:
     sdk: flutter
   hive_generator: ^1.1.0
   build_runner: ^2.0.4
+  mockito: ^5.0.10
 
 flutter:
   uses-material-design: true

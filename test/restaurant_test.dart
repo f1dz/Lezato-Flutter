@@ -1,38 +1,57 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lezato/data/api/api_service.dart';
+import 'package:lezato/data/model/response/response_restaurant_detail.dart';
 import 'package:lezato/data/model/restaurant.dart';
+import 'package:lezato/provider/app_provider.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 
+import 'restaurant_test.mocks.dart';
+
+@GenerateMocks([AppProvider, ApiService])
 void main() {
-  test('Should success parsing json', () {
-    var _json = {
-      "id": "abc123",
-      "name": "Restaurant",
-      "description": "Test 123",
-      "pictureId": "1",
-      "city": " Jakarta",
-      "rating": 4.7
-    };
+  group('Restaurant Test', () {
+    Restaurant restaurant;
+    ApiService apiService;
+    AppProvider appProvider;
 
-    var restaurantObject = Restaurant(
-      id: "abc123",
-      name: "Restaurant",
-      description: "Test 123",
-      pictureId: "1",
-      city: "Jakarta",
-      rating: 4.7,
-    );
-    var result = Restaurant.fromJson(_json);
+    setUp(() {
+      apiService = MockApiService();
+      appProvider = MockAppProvider();
+      restaurant = Restaurant(
+        id: "abc123",
+        name: "Restaurant",
+        description: "Test 123",
+        pictureId: "1",
+        city: "Jakarta",
+        rating: 4.7,
+      );
+    });
 
-    expect(result.name, restaurantObject.name);
-  });
+    test('Should success parsing json', () {
+      var result = Restaurant.fromJson(restaurant.toJson());
 
-  test("Should get restaurant name from API", () async {
-    final api = ApiService();
-    var id = "rqdv5juczeskfw1e867";
-    var expectedName = "Melting Pot";
+      expect(result.name, restaurant.name);
+    });
 
-    var restaurant = await api.getDetail(id);
+    test("Should return restaurant detail from API", () async {
+      when(apiService.getDetail(restaurant.id)).thenAnswer((_) async {
+        return ResponseRestaurantDetail(
+          error: false,
+          message: 'success',
+          restaurant: restaurant,
+        );
+      });
 
-    expect(restaurant.restaurant.name, expectedName);
+      expect(await apiService.getDetail(restaurant.id), isA<ResponseRestaurantDetail>());
+    });
+
+    test('Should return favorite restaurant', () {
+      when(appProvider.favoriteRestaurants).thenAnswer((realInvocation) {
+        List<Restaurant> restaurants = [restaurant];
+        return restaurants;
+      });
+      expect(appProvider.favoriteRestaurants, isA<List<Restaurant>>());
+    });
   });
 }
